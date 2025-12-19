@@ -1,0 +1,231 @@
+openapi: 3.0.3
+info:
+  title: Search Service API
+  description: >
+    Search microservice for an e-commerce application.
+    Provides full-text search, filtering, sorting, and autocomplete
+    across products and categories.
+  version: 1.0.0
+  contact:
+    name: Search Team
+    email: search-team@example.com
+
+servers:
+  - url: https://api.example.com/search
+    description: Production
+  - url: http://localhost:8090
+    description: Local development
+
+tags:
+  - name: Product Search
+  - name: Autocomplete
+  - name: Filters
+
+paths:
+  /products:
+    get:
+      tags: [Product Search]
+      summary: Search products
+      description: Full-text search with filtering, sorting, and pagination
+      parameters:
+        - name: q
+          in: query
+          description: Search query text
+          required: true
+          schema:
+            type: string
+        - name: categoryId
+          in: query
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+            format: double
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+            format: double
+        - name: sort
+          in: query
+          description: Sorting option
+          schema:
+            type: string
+            enum: [relevance, price_asc, price_desc, newest]
+            default: relevance
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductSearchResponse'
+
+  /products/autocomplete:
+    get:
+      tags: [Autocomplete]
+      summary: Product search autocomplete
+      description: Returns suggestions for product names as the user types
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 20
+      responses:
+        '200':
+          description: Autocomplete suggestions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+
+  /filters:
+    get:
+      tags: [Filters]
+      summary: Get available search filters
+      description: >
+        Returns available filter facets such as categories, price ranges,
+        brands, and attributes based on indexed data.
+      responses:
+        '200':
+          description: Available filters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterResponse'
+
+components:
+  schemas:
+    ProductSearchResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductSearchItem'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        facets:
+          $ref: '#/components/schemas/SearchFacets'
+
+    ProductSearchItem:
+      type: object
+      required: [id, name, price, currency]
+      properties:
+        id:
+          type: string
+          example: prod_123
+        name:
+          type: string
+          example: Wireless Mouse
+        description:
+          type: string
+          example: Ergonomic wireless mouse
+        price:
+          type: number
+          format: double
+          example: 29.99
+        currency:
+          type: string
+          example: USD
+        categoryId:
+          type: string
+          example: cat_456
+        imageUrl:
+          type: string
+          format: uri
+        score:
+          type: number
+          format: float
+          description: Relevance score from search engine
+
+    SearchFacets:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Facet'
+        priceRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceFacet'
+
+    Facet:
+      type: object
+      properties:
+        key:
+          type: string
+          example: Accessories
+        count:
+          type: integer
+          example: 120
+
+    PriceFacet:
+      type: object
+      properties:
+        min:
+          type: number
+          format: double
+        max:
+          type: number
+          format: double
+        count:
+          type: integer
+
+    AutocompleteResponse:
+      type: object
+      properties:
+        suggestions:
+          type: array
+          items:
+            type: string
+          example:
+            - wireless mouse
+            - wireless keyboard
+            - wireless headphones
+
+    FilterResponse:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Facet'
+        brands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Facet'
+        priceRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceFacet'

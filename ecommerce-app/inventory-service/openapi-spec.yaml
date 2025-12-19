@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: Inventory Service API
+  description: >
+    Inventory Service responsible for managing product stock levels,
+    reservations, and availability for an e-commerce application.
+  version: 1.0.0
+  contact:
+    name: Inventory Team
+    email: inventory-team@example.com
+
+servers:
+  - url: https://api.example.com/inventory
+    description: Production
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: Inventory
+    description: Stock and availability operations
+  - name: Reservations
+    description: Stock reservation operations
+  - name: Health
+    description: Service health checks
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      description: Returns service health status
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /items:
+    get:
+      tags: [Inventory]
+      summary: List inventory items
+      description: Retrieve paginated inventory items
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: size
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Inventory items retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PagedInventoryItems"
+
+  /items/{sku}:
+    get:
+      tags: [Inventory]
+      summary: Get inventory by SKU
+      description: Retrieve inventory details for a specific SKU
+      parameters:
+        - in: path
+          name: sku
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Inventory item found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "404":
+          description: SKU not found
+
+  /items/{sku}/adjust:
+    post:
+      tags: [Inventory]
+      summary: Adjust stock level
+      description: Increase or decrease available stock for a SKU
+      parameters:
+        - in: path
+          name: sku
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StockAdjustmentRequest"
+      responses:
+        "200":
+          description: Stock adjusted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "400":
+          description: Invalid adjustment request
+        "404":
+          description: SKU not found
+
+  /reservations:
+    post:
+      tags: [Reservations]
+      summary: Create stock reservation
+      description: Reserve stock for an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReservationRequest"
+      responses:
+        "201":
+          description: Reservation created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reservation"
+        "400":
+          description: Insufficient stock
+
+  /reservations/{reservationId}:
+    delete:
+      tags: [Reservations]
+      summary: Release reservation
+      description: Release previously reserved stock
+      parameters:
+        - in: path
+          name: reservationId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Reservation released
+        "404":
+          description: Reservation not found
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: UP
+        timestamp:
+          type: string
+          format: date-time
+
+    InventoryItem:
+      type: object
+      properties:
+        sku:
+          type: string
+          example: SKU-12345
+        productName:
+          type: string
+          example: Wireless Mouse
+        availableQuantity:
+          type: integer
+          example: 120
+        reservedQuantity:
+          type: integer
+          example: 20
+        lastUpdated:
+          type: string
+          format: date-time
+      required:
+        - sku
+        - availableQuantity
+        - reservedQuantity
+
+    PagedInventoryItems:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/InventoryItem"
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+
+    StockAdjustmentRequest:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Positive to increase, negative to decrease stock
+          example: -5
+        reason:
+          type: string
+          example: Order fulfillment
+      required:
+        - quantity
+
+    ReservationRequest:
+      type: object
+      properties:
+        sku:
+          type: string
+          example: SKU-12345
+        quantity:
+          type: integer
+          example: 2
+        orderId:
+          type: string
+          example: ORDER-98765
+      required:
+        - sku
+        - quantity
+        - orderId
+
+    Reservation:
+      type: object
+      properties:
+        reservationId:
+          type: string
+          format: uuid
+        sku:
+          type: string
+        quantity:
+          type: integer
+        orderId:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time

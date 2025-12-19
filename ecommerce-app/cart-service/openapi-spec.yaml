@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: Cart Service API
+  description: >
+    Cart Service for an e-commerce application.
+    Handles shopping cart creation and item management.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/cart
+    description: Production
+  - url: http://localhost:8080/cart
+    description: Local development
+
+tags:
+  - name: Cart
+    description: Shopping cart operations
+
+paths:
+  /carts:
+    post:
+      tags: [Cart]
+      summary: Create a new cart
+      operationId: createCart
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCartRequest"
+      responses:
+        "201":
+          description: Cart created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "400":
+          description: Invalid request
+
+  /carts/{cartId}:
+    get:
+      tags: [Cart]
+      summary: Get cart by ID
+      operationId: getCart
+      parameters:
+        - $ref: "#/components/parameters/CartId"
+      responses:
+        "200":
+          description: Cart retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "404":
+          description: Cart not found
+
+    delete:
+      tags: [Cart]
+      summary: Clear a cart
+      operationId: clearCart
+      parameters:
+        - $ref: "#/components/parameters/CartId"
+      responses:
+        "204":
+          description: Cart cleared
+        "404":
+          description: Cart not found
+
+  /carts/{cartId}/items:
+    post:
+      tags: [Cart]
+      summary: Add item to cart
+      operationId: addItemToCart
+      parameters:
+        - $ref: "#/components/parameters/CartId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddItemRequest"
+      responses:
+        "200":
+          description: Item added to cart
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "404":
+          description: Cart not found
+
+  /carts/{cartId}/items/{itemId}:
+    put:
+      tags: [Cart]
+      summary: Update cart item quantity
+      operationId: updateCartItem
+      parameters:
+        - $ref: "#/components/parameters/CartId"
+        - $ref: "#/components/parameters/ItemId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateItemRequest"
+      responses:
+        "200":
+          description: Item updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "404":
+          description: Cart or item not found
+
+    delete:
+      tags: [Cart]
+      summary: Remove item from cart
+      operationId: removeCartItem
+      parameters:
+        - $ref: "#/components/parameters/CartId"
+        - $ref: "#/components/parameters/ItemId"
+      responses:
+        "200":
+          description: Item removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "404":
+          description: Cart or item not found
+
+components:
+  parameters:
+    CartId:
+      name: cartId
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "cart_12345"
+
+    ItemId:
+      name: itemId
+      in: path
+      required: true
+      schema:
+        type: string
+        example: "sku_98765"
+
+  schemas:
+    CreateCartRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "user_123"
+
+    AddItemRequest:
+      type: object
+      required: [productId, quantity, price]
+      properties:
+        productId:
+          type: string
+          example: "sku_98765"
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+        price:
+          type: number
+          format: double
+          example: 19.99
+
+    UpdateItemRequest:
+      type: object
+      required: [quantity]
+      properties:
+        quantity:
+          type: integer
+          minimum: 1
+          example: 3
+
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "cart_12345"
+        userId:
+          type: string
+          example: "user_123"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+        totalPrice:
+          type: number
+          format: double
+          example: 59.97
+        currency:
+          type: string
+          example: "USD"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-01-10T12:34:56Z"
+
+    CartItem:
+      type: object
+      properties:
+        itemId:
+          type: string
+          example: "sku_98765"
+        quantity:
+          type: integer
+          example: 2
+        price:
+          type: number
+          format: double
+          example: 19.99
+        subtotal:
+          type: number
+          format: double
+          example: 39.98

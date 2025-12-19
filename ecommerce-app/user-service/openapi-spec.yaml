@@ -1,0 +1,352 @@
+openapi: 3.0.3
+info:
+  title: User Service API
+  description: >
+    User Service microservice for an e-commerce application.
+    Manages user profiles, addresses, preferences, and account status.
+  version: 1.0.0
+  contact:
+    name: User Platform Team
+    email: user-team@example.com
+
+servers:
+  - url: https://api.example.com/users
+    description: Production
+  - url: http://localhost:8070
+    description: Local development
+
+tags:
+  - name: Users
+  - name: Addresses
+  - name: Preferences
+
+paths:
+  /users:
+    post:
+      tags: [Users]
+      summary: Create user profile
+      description: Creates a new user profile after successful authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{userId}:
+    get:
+      tags: [Users]
+      summary: Get user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+
+    put:
+      tags: [Users]
+      summary: Update user profile
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+    delete:
+      tags: [Users]
+      summary: Deactivate user account
+      description: Soft-deletes (deactivates) a user account
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deactivated
+
+  /users/{userId}/addresses:
+    get:
+      tags: [Addresses]
+      summary: List user addresses
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of addresses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Address'
+
+    post:
+      tags: [Addresses]
+      summary: Add address for user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressCreateRequest'
+      responses:
+        '201':
+          description: Address added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+
+  /users/{userId}/addresses/{addressId}:
+    put:
+      tags: [Addresses]
+      summary: Update address
+      parameters:
+        - name: userId
+          in: path
+          required: true
+        - name: addressId
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressUpdateRequest'
+      responses:
+        '200':
+          description: Address updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+
+    delete:
+      tags: [Addresses]
+      summary: Delete address
+      parameters:
+        - name: userId
+          in: path
+          required: true
+        - name: addressId
+          in: path
+          required: true
+      responses:
+        '204':
+          description: Address deleted
+
+  /users/{userId}/preferences:
+    get:
+      tags: [Preferences]
+      summary: Get user preferences
+      parameters:
+        - name: userId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: User preferences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+
+    put:
+      tags: [Preferences]
+      summary: Update user preferences
+      parameters:
+        - name: userId
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPreferences'
+      responses:
+        '200':
+          description: Preferences updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, email, status]
+      properties:
+        id:
+          type: string
+          example: user_123
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        phone:
+          type: string
+          example: "+1-555-123-4567"
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE, SUSPENDED]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UserCreateRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+
+    UserUpdateRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+
+    Address:
+      type: object
+      required: [id, line1, city, country, postalCode]
+      properties:
+        id:
+          type: string
+          example: addr_789
+        line1:
+          type: string
+          example: 123 Main St
+        line2:
+          type: string
+          example: Apt 4B
+        city:
+          type: string
+          example: New York
+        state:
+          type: string
+          example: NY
+        country:
+          type: string
+          example: US
+        postalCode:
+          type: string
+          example: 10001
+        isDefault:
+          type: boolean
+          default: false
+
+    AddressCreateRequest:
+      type: object
+      required: [line1, city, country, postalCode]
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        isDefault:
+          type: boolean
+
+    AddressUpdateRequest:
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        isDefault:
+          type: boolean
+
+    UserPreferences:
+      type: object
+      properties:
+        language:
+          type: string
+          example: en
+        currency:
+          type: string
+          example: USD
+        marketingEmailsEnabled:
+          type: boolean
+          example: true
