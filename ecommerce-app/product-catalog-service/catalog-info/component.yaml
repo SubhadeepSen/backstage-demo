@@ -8,6 +8,7 @@ spec:
   type: service
   lifecycle: production
   system: ecommerce-system
+  owner: team-commerce
   implementsApis:
     - product-catalog-service-api
   dependsOn:
