@@ -7,3 +7,5 @@ spec:
   type: api
   owner: team-commerce
   system: ecommerce-system
+  usedBy:
+    - payment-processing-service

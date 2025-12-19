@@ -10,3 +10,5 @@ spec:
   system: ecommerce-system
   implementsApis:
     - cart-service-api
+  dependsOn:
+    - cart-redis

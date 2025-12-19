@@ -10,3 +10,6 @@ spec:
   system: ecommerce-system
   implementsApis:
     - order-management-service-api
+  dependsOn:
+    - orders-db
+    - order-events

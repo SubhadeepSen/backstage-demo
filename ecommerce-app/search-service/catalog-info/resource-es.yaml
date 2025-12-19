@@ -7,3 +7,5 @@ spec:
   type: search
   owner: team-commerce
   system: ecommerce-system
+  usedBy:
+    - search-service

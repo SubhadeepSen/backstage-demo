@@ -10,3 +10,6 @@ spec:
   system: ecommerce-system
   implementsApis:
     - payment-processing-service-api
+  dependsOn:
+    - payment-db
+    - payment-gateway

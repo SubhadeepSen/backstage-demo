@@ -10,3 +10,5 @@ spec:
   system: ecommerce-system
   implementsApis:
     - user-service-api
+  dependsOn:
+    - user-db

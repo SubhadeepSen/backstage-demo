@@ -7,3 +7,5 @@ spec:
   type: storage
   owner: team-commerce
   system: ecommerce-system
+  usedBy:
+    - product-catalog-service

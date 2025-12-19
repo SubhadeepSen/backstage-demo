@@ -10,3 +10,5 @@ spec:
   system: ecommerce-system
   implementsApis:
     - search-service-api
+  dependsOn:
+    - search-engine

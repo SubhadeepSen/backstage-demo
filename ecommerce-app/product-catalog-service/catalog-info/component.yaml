@@ -10,3 +10,6 @@ spec:
   system: ecommerce-system
   implementsApis:
     - product-catalog-service-api
+  dependsOn:
+    - product-catalog-db
+    - product-images-s3

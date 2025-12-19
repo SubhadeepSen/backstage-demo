@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: ecommerce-app
+  description: All backstage kinds of ecommerce app
+spec:
+  targets:
+    - ./catalog-info/domain.yaml
+    - ./catalog-info/system.yaml
+    - ./cart-service/component.yaml
+    - ./cart-service/api.yaml
+    - ./cart-service/resource-redis.yaml
+    - ./inventory-service/component.yaml
+    - ./inventory-service/api.yaml
+    - ./inventory-service/resource-db.yaml
+    - ./order-management-service/component.yaml
+    - ./order-management-service/api.yaml
+    - ./order-management-service/resource-db.yaml
+    - ./order-management-service/resource-mq.yaml 
+    - ./payment-processing-service/component.yaml
+    - ./payment-processing-service/api.yaml
+    - ./payment-processing-service/resource-db.yaml
+    - ./payment-processing-service/resource-gateway.yaml
+    - ./product-catalog-service/component.yaml
+    - ./product-catalog-service/api.yaml
+    - ./product-catalog-service/resource-db.yaml
+    - ./product-catalog-service/resource-obj-storage.yaml
+    - ./search-service/component.yaml
+    - ./search-service/api.yaml
+    - ./search-service/resource-es.yaml
+    - ./user-service/component.yaml
+    - ./user-service/api.yaml
+    - ./user-service/resource-db.yaml
