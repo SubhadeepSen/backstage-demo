@@ -12,4 +12,4 @@ spec:
   implementsApis:
     - cart-service-api
   dependsOn:
-    - cart-redis
+    - resource:cart-redis
