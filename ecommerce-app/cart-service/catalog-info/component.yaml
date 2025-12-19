@@ -11,3 +11,5 @@ spec:
   owner: team-commerce
   implementsApis:
     - cart-service-api
+  dependsOn:
+    - cart-redis

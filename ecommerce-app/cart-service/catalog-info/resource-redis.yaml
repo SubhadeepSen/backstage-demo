@@ -7,5 +7,3 @@ spec:
   type: database
   owner: team-commerce
   system: ecommerce-system
-  usedBy:
-    - cart-service
