@@ -9,7 +9,7 @@ spec:
   lifecycle: production
   system: ecommerce-system
   owner: team-commerce
-  implementsApis:
+  providesApis:
     - cart-service-api
   dependsOn:
     - resource:cart-redis
