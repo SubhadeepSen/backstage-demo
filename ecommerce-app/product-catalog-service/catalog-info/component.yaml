@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: product-catalog-service
+  description: Manages product details and catalog
+  owner: team-commerce
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  implementsApis:
+    - product-catalog-service-api

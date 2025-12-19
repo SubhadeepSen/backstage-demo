@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: inventory-service
+  description: Tracks product inventory
+  owner: team-commerce
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  implementsApis:
+    - inventory-service-api

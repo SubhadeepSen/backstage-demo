@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: search-service-api
+  description: API for product search
+  owner: team-commerce
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  definition:
+    $text: https://api.example.com/search-service/openapi.yaml
+  owner: team-commerce

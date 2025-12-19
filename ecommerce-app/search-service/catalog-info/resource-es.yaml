@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: search-engine
+  description: Elasticsearch cluster for product search
+spec:
+  type: search
+  owner: team-commerce
+  system: ecommerce-system

@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: product-images-s3
+  description: S3 bucket storing product images
+spec:
+  type: storage
+  owner: team-commerce
+  system: ecommerce-system

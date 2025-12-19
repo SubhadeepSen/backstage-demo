@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: payment-processing-service-api
+  description: API for processing payments
+  owner: team-commerce
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  definition:
+    $text: https://api.example.com/payment-processing-service/openapi.yaml
+  owner: team-commerce

@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: product-catalog-service-api
+  description: API for managing product catalog
+  owner: team-commerce
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  definition:
+    $text: https://api.example.com/product-catalog-service/openapi.yaml
+  owner: team-commerce
