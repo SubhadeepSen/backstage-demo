@@ -9,5 +9,5 @@ spec:
   lifecycle: production
   system: ecommerce-system
   definition:
-    $text: https://api.example.com/inventory-service/openapi.yaml
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/inventory-service/openapi-spec/openapi-spec.yaml
   owner: team-commerce
