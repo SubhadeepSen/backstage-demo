@@ -9,6 +9,6 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
-  name: inventory-team-mem-a
+  name: inventory-team-mem-b
 spec:
   memberOf: [ecommerce-web-inventory-team]
