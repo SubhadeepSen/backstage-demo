@@ -11,7 +11,7 @@ spec:
   lifecycle: production
   system: ecommerce-system
   owner: ecommerce-web-payment-team
-  implementsApis:
+  providesApis:
     - payment-processing-service-api
   dependsOn:
     - resource:payment-db

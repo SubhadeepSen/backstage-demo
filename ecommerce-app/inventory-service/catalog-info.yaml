@@ -11,7 +11,7 @@ spec:
   lifecycle: production
   system: ecommerce-system
   owner: ecommerce-web-inventory-team
-  implementsApis:
+  providesApis:
     - inventory-service-api
   dependsOn:
     - resource:inventory-db

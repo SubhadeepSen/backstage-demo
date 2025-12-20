@@ -11,8 +11,12 @@ spec:
   lifecycle: production
   system: ecommerce-system
   owner: ecommerce-web-order-team
-  implementsApis:
+  providesApis:
     - order-management-service-api
+  consumesApis:
+    - user-service-api
+    - inventory-service-api
+    - payment-processing-service-api
   dependsOn:
     - resource:orders-db
     - resource:order-events

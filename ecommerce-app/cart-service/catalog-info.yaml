@@ -13,6 +13,9 @@ spec:
   owner: ecommerce-web-cart-team
   providesApis:
     - cart-service-api
+  consumesApis:
+    - order-management-service-api
+    - inventory-service-api
   dependsOn:
     - resource:cart-redis
 
