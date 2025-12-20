@@ -17,6 +17,7 @@ spec:
     - product-catalog-service-api
   dependsOn:
     - resource:elasticsearch-engine
+    - component:product-catalog-service
 
 ---
 apiVersion: backstage.io/v1alpha1

@@ -20,6 +20,9 @@ spec:
   dependsOn:
     - resource:orders-db
     - resource:order-events
+    - component:user-service
+    - component:inventory-service
+    - component:payment-processing-service
 
 ---
 apiVersion: backstage.io/v1alpha1

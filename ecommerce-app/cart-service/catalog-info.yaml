@@ -18,6 +18,8 @@ spec:
     - inventory-service-api
   dependsOn:
     - resource:cart-redis
+    - component:order-management-service
+    - component:inventory-service
 
 ---
 apiVersion: backstage.io/v1alpha1
