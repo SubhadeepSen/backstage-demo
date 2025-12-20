@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
-  name: web-team-mem-a
+  name: cart-team-mem-a
 spec:
   memberOf: [ecommerce-web-cart-team]
 
@@ -9,6 +9,6 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
-  name: web-team-mem-b
+  name: cart-team-mem-b
 spec:
   memberOf: [ecommerce-web-cart-team]
