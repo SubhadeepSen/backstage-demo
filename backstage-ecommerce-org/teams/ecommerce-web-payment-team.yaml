@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-web-payment-team
+  description: ecommerce-web-payment-team
+spec:
+  type: team
+  parent: ecommerce-web-payment-department
+  children: []

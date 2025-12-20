@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: ecommerce-app-microservices
+  description: All backstage kinds for ecommerce-app microservices
+spec:
+  targets:
+    - ./user-service/catalog-info.yaml
+    - ./cart-service/catalog-info.yaml
+    - ./order-management-service/catalog-info.yaml
+    - ./payment-processing-service/catalog-info.yaml
+    - ./inventory-service/catalog-info.yaml
+    - ./product-catalog-service/catalog-info.yaml
+    - ./product-search-service/catalog-info.yaml

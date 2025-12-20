@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-web-cart-department
+  description: The ecommerce web cart department
+spec:
+  type: sub-department
+  parent: ecommerce-web-department
+  children: [ecommerce-web-cart-team]

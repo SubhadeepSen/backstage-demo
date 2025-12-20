@@ -1,0 +1,54 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: order-management-service
+  description: Handles order lifecycle
+  tags:
+    - java
+    - rest  
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-order-team
+  implementsApis:
+    - order-management-service-api
+  dependsOn:
+    - resource:orders-db
+    - resource:order-events
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: orders-db
+  description: PostgreSQL database for order management
+spec:
+  type: database
+  system: ecommerce-system
+  owner: ecommerce-web-order-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: order-events
+  description: Kafka topic for order events
+spec:
+  type: messageQueue
+  system: ecommerce-system
+  owner: ecommerce-web-order-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: order-management-service-api
+  description: API for handling orders
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-order-team
+  definition:
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/order-management-service/openapi-spec/openapi-spec.yaml

@@ -1,0 +1,54 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-processing-service
+  description: Handles payments and transactions
+  tags:
+    - java
+    - rest  
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-payment-team
+  implementsApis:
+    - payment-processing-service-api
+  dependsOn:
+    - resource:payment-db
+    - resource:payment-gateway
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: payment-db
+  description: Database for transaction logs
+spec:
+  type: database
+  system: ecommerce-system
+  owner: ecommerce-web-payment-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: payment-gateway
+  description: External payment gateway integration
+spec:
+  type: api
+  system: ecommerce-system
+  owner: ecommerce-web-payment-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: payment-processing-service-api
+  description: API for processing payments
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-payment-team
+  definition:
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/payment-processing-service/openapi-spec/openapi-spec.yaml

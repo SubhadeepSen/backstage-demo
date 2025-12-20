@@ -1,0 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: product-search-service
+  description: Provides product search capabilities
+  tags:
+    - golang
+    - rest  
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+  implementsApis:
+    - product-search-service-api
+  dependsOn:
+    - resource:elasticsearch-engine
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: elasticsearch-engine
+  description: Elasticsearch cluster for product search
+spec:
+  type: search
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: product-search-service-api
+  description: API for product search
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+  definition:
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/product-search-service/openapi-spec/openapi-spec.yaml

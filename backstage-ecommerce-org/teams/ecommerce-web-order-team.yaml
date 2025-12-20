@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-web-order-team
+  description: ecommerce-web-order-team
+spec:
+  type: team
+  parent: ecommerce-web-order-department
+  children: []

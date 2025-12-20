@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-leadership
+  description: The ecommerce leadership
+spec:
+  type: leadership
+  parent: ecommerce-org
+  children: [ecommerce-domain, ecommerce-system, ecommerce-web-department]

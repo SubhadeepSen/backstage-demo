@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: payment-team-mem-a
+spec:
+  memberOf: [ecommerce-web-payment-team]
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: payment-team-mem-a
+spec:
+  memberOf: [ecommerce-web-payment-team]

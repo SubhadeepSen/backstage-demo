@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-org
+  description: The ecommerce organization
+  links:
+    - url: https://ecommerceexamplecorp.com
+      title: ECommerce Dashboard
+      icon: dashboard
+spec:
+  type: organization
+  profile:
+    displayName: ECommerceExampleCorp
+    email: ecommerceexamplecorp@ecom.com
+    picture: https://api.dicebear.com/7.x/identicon/svg?seed=Maggie&flip=true&backgroundColor=ffdfbf
+  children: [ecommerce-leadership]

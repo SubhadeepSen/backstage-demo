@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: web-team-mem-a
+spec:
+  memberOf: [ecommerce-web-user-team]
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: web-team-mem-b
+spec:
+  memberOf: [ecommerce-web-user-team]

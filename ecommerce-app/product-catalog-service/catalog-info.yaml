@@ -1,0 +1,54 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: product-catalog-service
+  description: Manages product details and catalog
+  tags:
+    - java
+    - rest  
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+  implementsApis:
+    - product-catalog-service-api
+  dependsOn:
+    - resource:product-catalog-db
+    - resource:product-catalog-s3-bucket
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: product-catalog-db
+  description: Database storing product metadata
+spec:
+  type: database
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: product-catalog-s3-bucket
+  description: S3 bucket storing product images
+spec:
+  type: storage
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: product-catalog-service-api
+  description: API for managing product catalog
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-product-catalog-team
+  definition:
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/product-catalog-service/openapi-spec/openapi-spec.yaml

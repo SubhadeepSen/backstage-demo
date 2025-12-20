@@ -1,9 +1,0 @@
-apiVersion: backstage.io/v1alpha1
-kind: Resource
-metadata:
-  name: cart-redis
-  description: Redis instance for cart storage
-spec:
-  type: database
-  owner: team-commerce
-  system: ecommerce-system

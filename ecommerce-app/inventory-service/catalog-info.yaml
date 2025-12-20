@@ -1,0 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: inventory-service
+  description: Tracks product inventory
+  tags:
+    - java
+    - rest  
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-inventory-team
+  implementsApis:
+    - inventory-service-api
+  dependsOn:
+    - resource:inventory-db
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: inventory-db
+  description: PostgreSQL database for inventory tracking
+spec:
+  type: database
+  system: ecommerce-system
+  owner: ecommerce-web-inventory-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: inventory-service-api
+  description: API for tracking product inventory
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-inventory-team
+  definition:
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/inventory-service/openapi-spec/openapi-spec.yaml

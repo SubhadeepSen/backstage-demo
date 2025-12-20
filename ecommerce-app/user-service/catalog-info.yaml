@@ -1,0 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: user-service
+  description: Manages user profiles and authentication
+  tags:
+    - nodejs
+    - rest  
+spec:
+  type: service
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-user-team
+  implementsApis:
+    - user-service-api
+  dependsOn:
+    - resource:user-db
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: user-db
+  description: PostgreSQL database for user profiles
+spec:
+  type: database
+  system: ecommerce-system
+  owner: ecommerce-web-user-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: user-service-api
+  description: API for user management and authentication
+spec:
+  type: openapi
+  lifecycle: production
+  system: ecommerce-system
+  owner: ecommerce-web-user-team
+  definition:
+    $text: https://github.com/SubhadeepSen/backstage-demo/blob/main/ecommerce-app/user-service/openapi-spec/openapi-spec.yaml

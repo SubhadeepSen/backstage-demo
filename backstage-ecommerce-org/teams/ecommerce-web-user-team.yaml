@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-web-user-team
+  description: ecommerce-web-user-team
+spec:
+  type: team
+  parent: ecommerce-web-user-department
+  children: []

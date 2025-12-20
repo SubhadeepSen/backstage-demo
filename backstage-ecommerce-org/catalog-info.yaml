@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: ecommerce-org
+  description: All backstage kinds to setup ecommerce organization and teams along with members
+spec:
+  targets:
+    - ./org/ecommerce-org.yaml
+    - ./leaderships/ecommerce-leadership.yaml
+    - ./domains/ecommerce-domain.yaml
+    - ./systems/ecommerce-system.yaml
+    - ./departments/ecommerce-web-department.yaml
+    - ./departments/sub-departments/ecommerce-web-user-department.yaml
+    - ./departments/sub-departments/ecommerce-web-cart-department.yaml
+    - ./departments/sub-departments/ecommerce-web-order-department.yaml
+    - ./departments/sub-departments/ecommerce-web-payment-department.yaml
+    - ./departments/sub-departments/ecommerce-web-inventory-department.yaml
+    - ./departments/sub-departments/ecommerce-web-product-catalog-department.yaml
+    - ./teams/ecommerce-web-user-team.yaml
+    - ./teams/ecommerce-web-cart-team.yaml
+    - ./teams/ecommerce-web-order-team.yaml
+    - ./teams/ecommerce-web-payment-team.yaml
+    - ./teams/ecommerce-web-inventory-team.yaml
+    - ./teams/ecommerce-web-product-catalog-team.yaml
+    - ./team-members/web-team-members.yaml
+    - ./team-members/cart-team-members.yaml
+    - ./team-members/order-team-members.yaml
+    - ./team-members/payment-team-members.yaml
+    - ./team-members/inventory-team-members.yaml
+    - ./team-members/product-catalog-team-members.yaml

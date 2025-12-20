@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-web-department
+  description: The ecommerce web department
+spec:
+  type: department
+  parent: ecommerce-leadership
+  children: 
+    - ecommerce-web-user-department
+    - ecommerce-web-cart-department
+    - ecommerce-web-order-department
+    - ecommerce-web-payment-department
+    - ecommerce-web-inventory-department
+    - ecommerce-web-product-catalog-department    
+    

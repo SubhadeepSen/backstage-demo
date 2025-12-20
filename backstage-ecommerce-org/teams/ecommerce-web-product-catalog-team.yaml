@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ecommerce-web-product-catalog-team
+  description: ecommerce-web-product-catalog-team
+spec:
+  type: team
+  parent: ecommerce-web-product-catalog-department
+  children: []
